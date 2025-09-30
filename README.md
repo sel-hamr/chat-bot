@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DIY Chat Bot Platform
 
-## Getting Started
+This project lets you spin up a fully branded chatbot front end with minimal effort. It wraps the `@n8n/chat` widget inside a Next.js App Router application, manages access by checking MongoDB for valid users, and layers shadcn-inspired styling on top so conversations feel polished out of the box. Bring your own n8n workflow, point the UI at its webhook, and share the resulting link to let teammates or customers chat immediately.
 
-First, run the development server:
+## Features
+
+- Embed the `@n8n/chat` widget in fullscreen mode
+- Shadcn-inspired styling for header, messages, input, and typing indicator
+- MongoDB-backed user validation through a server action
+- Configurable initial greetings and webhook targets via environment variables
+- Graceful “User not found” fallback with retry
+- Dark-mode friendly theme tokens and Tailwind utilities
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
+# visit http://localhost:3000/chatbot/<WEBHOOK_SECRET_KEY>?userId=<valid-user>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create `.env.local`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster-host>/?retryWrites=true&w=majority
+MONGODB_DB=<database-name>
+WEBHOOK_SECRET_KEY=<route-guard-secret>
+NEXT_PUBLIC_CREATE_CHATBOT_WEBHOOK_URL=https://your-n8n-domain/webhook
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  actions/check-user.ts      // Server action verifying user IDs in Mongo
+  app/chatbot/[slug]/page.tsx// Guards route, renders ChatBox or fallback
+  components/chat.tsx        // Initializes @n8n/chat with config
+  components/hero.tsx        // Landing page hero section
+  components/user-not-found.tsx // Shadcn-style error panel
+  app/globals.css            // Theme tokens + n8n chat overrides
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  lib/mongo.ts               // Cached MongoDB client helper
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+1. Ensure a `users` collection exists (ObjectId `_id` or `userId` string).
+2. Share the link `https://your-host/chatbot/<WEBHOOK_SECRET_KEY>?userId=<id>`.
+3. n8n handles conversation logic; this UI delivers a polished shell.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Troubleshooting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Issue            | Resolution                                                 |
+| ---------------- | ---------------------------------------------------------- |
+| 404 page         | Check `WEBHOOK_SECRET_KEY` matches the slug segment        |
+| “User not found” | Confirm `userId` exists in MongoDB `users` collection      |
+| Styling missing  | Verify `.n8n-chat` container renders and globals.css loads |
+
+## Deployment
+
+- Deploy on Vercel or similar (Node.js runtime).
+- Add the same env vars to the hosting dashboard.
+- Allow the hosting IP in MongoDB network rules.
+
+## License
+
+MIT (adjust as needed).
