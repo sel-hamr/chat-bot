@@ -1,5 +1,12 @@
 import HeroSection from "@/components/hero";
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "DIY Chatbot Platform - Home",
+  description:
+    "Build and deploy your own branded chatbot in minutes. Powered by modern workflows, Next.js, and MongoDB with a shadcn-inspired UI.",
+};
 
 export default function Home() {
   return (

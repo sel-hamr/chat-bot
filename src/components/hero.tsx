@@ -26,14 +26,14 @@ const HeroSection = () => {
       </p>
       <div className="mt-12 flex items-center justify-center gap-4 z-20 relative">
         <Link href={PAGES_PATH.CREATE_CHATBOT} className="cursor-pointer">
-          <Button size="lg" className="rounded-full text-base">
+          <Button size="lg" className="rounded-full text-base cursor-pointer">
             Get Started <ArrowUpRight className="size-5" />
           </Button>
         </Link>
         <Button
           variant="secondary"
           size="lg"
-          className="rounded-full text-base shadow-none cursor-pointer"
+          className="rounded-full text-base shadow-none cursor-not-allowed"
         >
           Contact Us
         </Button>

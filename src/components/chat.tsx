@@ -17,7 +17,6 @@ const ChatBox = ({ userId, secretKey }: ChatBoxProps) => {
     theme: "dark",
     initialMessages: [
       "Hi there! 👋",
-      "I'm here to help you explore your n8n workflow.",
       "Ask me anything and I'll pass it along.",
     ],
     metadata: {
@@ -49,13 +48,7 @@ const ChatBox = ({ userId, secretKey }: ChatBoxProps) => {
 
     return () => observer.disconnect();
   }, []);
-  return (
-    <div id="n8n-chat" className="min-h-screen">
-      <style>{`
-
-    `}</style>
-    </div>
-  );
+  return <div id="n8n-chat" className="min-h-screen"></div>;
 };
 
 export default ChatBox;

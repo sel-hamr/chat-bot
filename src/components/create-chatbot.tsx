@@ -141,7 +141,11 @@ export function ChatBotForm({
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Processing..." : "Create Your Chat-Bot"}
             </Button>
           </div>
