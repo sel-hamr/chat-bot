@@ -26,7 +26,9 @@ const fileSchema = z
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please provide a valid email." }),
-  url: z.string().url({ message: "Please provide a valid URL." }),
+  url: z
+    .string()
+    .url({ message: "Please provide a valid URL must start with https://" }),
   username: z
     .string()
     .min(2, { message: "Username must be at least 2 characters." })

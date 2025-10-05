@@ -1,7 +1,8 @@
 "use server";
 
 const WEBHOOK_URL =
-  process.env.CREATE_CHATBOT_WEBHOOK_URL ?? "http://localhost:5678/webhook";
+  process.env.NEXT_PUBLIC_CREATE_CHATBOT_WEBHOOK_URL ??
+  "http://localhost:5678/webhook";
 
 const SECRET_KEY =
   process.env.WEBHOOK_SECRET_KEY ?? process.env.NEXT_PUBLIC_SECRET_KEY ?? "";
